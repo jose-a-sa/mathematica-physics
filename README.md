@@ -1,2 +1,2 @@
 # mathematica-physics
-Smaller exercises solved using Mathematica
+Small physics exercises solved using Mathematica, using rule-based and functional programming.

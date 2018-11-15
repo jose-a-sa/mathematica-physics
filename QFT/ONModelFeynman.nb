@@ -1,0 +1,3447 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    147289,       3439]
+NotebookOptionsPosition[    144331,       3377]
+NotebookOutlinePosition[    144664,       3392]
+CellTagsIndexPosition[    144621,       3389]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["O(\[ScriptCapitalN]) model", "Title",
+ CellChangeTimes->{{3.7508806745009937`*^9, 
+  3.750880679105443*^9}},ExpressionUUID->"b5e80127-dcf3-44fa-a1bb-\
+276bc9a80802"],
+
+Cell[CellGroupData[{
+
+Cell["Wick function setup", "Section",
+ CellChangeTimes->{{3.750880656167308*^9, 
+  3.750880705974853*^9}},ExpressionUUID->"4be3ae8a-5165-468e-af14-\
+133d5f02aaef"],
+
+Cell[BoxData[{
+ RowBox[{"SetAttributes", "[", 
+  RowBox[{"\[Delta]", ",", 
+   RowBox[{"{", "Orderless", "}"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"SetAttributes", "[", 
+  RowBox[{"\[CapitalDelta]", ",", 
+   RowBox[{"{", "Orderless", "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.750778164046068*^9, 3.750778181897298*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"e94da211-0028-4042-836d-503d90581366"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", 
+   RowBox[{"AngleBracket", ",", "CenterDot"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[LeftAngleBracket]", 
+    RowBox[{"CenterDot", "[", "x__\[Phi]", "]"}], "\[RightAngleBracket]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     UnderoverscriptBox["\[Sum]", 
+      RowBox[{"\[Iota]", "=", "2"}], 
+      RowBox[{"Length", "[", 
+       RowBox[{"{", "x", "}"}], "]"}]], 
+     RowBox[{
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", "x", "}"}], "\[LeftDoubleBracket]", "1", 
+         "\[RightDoubleBracket]"}], "\[CenterDot]", 
+        RowBox[{
+         RowBox[{"{", "x", "}"}], "\[LeftDoubleBracket]", "\[Iota]", 
+         "\[RightDoubleBracket]"}]}], "\[RightAngleBracket]"}], " ", 
+      RowBox[{"\[LeftAngleBracket]", 
+       RowBox[{"CenterDot", "@@", 
+        RowBox[{"Drop", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", "x", "}"}], "\[LeftDoubleBracket]", 
+           RowBox[{"2", ";;", "All"}], "\[RightDoubleBracket]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"\[Iota]", "-", "1"}], "}"}]}], "]"}]}], 
+       "\[RightAngleBracket]"}]}]}], "/;", 
+    RowBox[{
+     RowBox[{"Length", "[", 
+      RowBox[{"{", "x", "}"}], "]"}], ">", "2"}]}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"\[LeftAngleBracket]", 
+   RowBox[{"CenterDot", "[", 
+    RowBox[{"\[Phi]", "[", "x__", "]"}], "]"}], "\[RightAngleBracket]"}], ":=", 
+  RowBox[{"\[Phi]", "[", "x", "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{"\[LeftAngleBracket]", 
+   RowBox[{
+    RowBox[{"\[Phi]", "[", 
+     RowBox[{"i_", ",", "x_"}], "]"}], "\[CenterDot]", 
+    RowBox[{"\[Phi]", "[", 
+     RowBox[{"j_", ",", "y_"}], "]"}]}], "\[RightAngleBracket]"}], ":=", 
+  RowBox[{
+   RowBox[{"\[Delta]", "[", 
+    RowBox[{"i", ",", "j"}], "]"}], 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x", ",", "y"}], "]"}]}]}]}], "Input",
+ CellChangeTimes->{{3.750692431355833*^9, 3.750692555037578*^9}, {
+   3.750692590207383*^9, 3.7506928639463043`*^9}, {3.750692983501533*^9, 
+   3.7506929852910957`*^9}, {3.750693021739739*^9, 3.750693062880912*^9}, {
+   3.7506931836851482`*^9, 3.750693264300995*^9}, {3.7506933043410788`*^9, 
+   3.750693488758854*^9}, {3.750694025413579*^9, 3.750694078685597*^9}, 
+   3.7507766887657003`*^9, {3.7507768132009583`*^9, 3.750776856200448*^9}, {
+   3.750777096304904*^9, 3.750777104557496*^9}, {3.750869153758917*^9, 
+   3.7508691555366364`*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"82fd5efe-4191-44a2-a48b-3fc6803edc0d"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", 
+  RowBox[{
+  "\[CapitalDelta]ToGraph", ",", "GraphTo\[CapitalDelta]", ",", "SumRule", 
+   ",", "IsomorphicDiagramQ", ",", "AmputatedDiagramQ", ",", "GatherDiagrams",
+    ",", "UndEdgesRule"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"\[CapitalDelta]ToGraph", ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"List", "@@", 
+     RowBox[{"ExpandAll", "[", "#", "]"}]}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"v___", " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"Longest", "[", "b__", "]"}], ")"}], "?", 
+        RowBox[{"(", 
+         RowBox[{"MatchQ", "[", 
+          SuperscriptBox[
+           RowBox[{"\[CapitalDelta]", "[", "__", "]"}], "p_."], "]"}], 
+         ")"}]}]}], "\[RuleDelayed]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Graph", "[", 
+         RowBox[{
+          RowBox[{"Flatten", "[", 
+           RowBox[{
+            RowBox[{"List", "[", "b", "]"}], "/.", 
+            RowBox[{"{", 
+             RowBox[{
+              SuperscriptBox[
+               RowBox[{"\[CapitalDelta]", "[", "\[Alpha]__", "]"}], "q_"], 
+              "\[RuleDelayed]", 
+              RowBox[{"ConstantArray", "[", 
+               RowBox[{
+                RowBox[{"\[CapitalDelta]", "[", "\[Alpha]", "]"}], ",", "q"}],
+                "]"}]}], "}"}]}], "]"}], "/.", 
+          RowBox[{"{", 
+           RowBox[{"\[CapitalDelta]", "\[Rule]", "UndirectedEdge"}], "}"}]}], 
+         "]"}], ",", 
+        RowBox[{"Times", "[", "v", "]"}]}], "}"}]}], "}"}]}], 
+   "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"GraphTo\[CapitalDelta]", ":=", 
+   RowBox[{"Total", "@*", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Last", "[", "#", "]"}], 
+       RowBox[{"Times", "@@", 
+        RowBox[{"(", 
+         RowBox[{"\[CapitalDelta]", "@@@", 
+          RowBox[{"EdgeList", "[", 
+           RowBox[{"First", "@", "#"}], "]"}]}], ")"}]}]}], "&"}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SumRule", "[", "intP_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ExpandAll", "[", "#", "]"}], "//.", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"\[Delta]", "[", 
+           RowBox[{"\[Alpha]_", ",", "\[Beta]_"}], "]"}], 
+          RowBox[{"Longest", "[", "\[Gamma]_", "]"}]}], ".."}], " ", 
+        "\[RuleDelayed]", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"\[Gamma]", "/.", 
+           RowBox[{"\[Beta]", "\[Rule]", "\[Alpha]"}]}], ")"}], "/;", 
+         RowBox[{
+          RowBox[{"!", 
+           RowBox[{"FreeQ", "[", 
+            RowBox[{"\[Beta]", ",", "intP"}], "]"}]}], "&&", 
+          RowBox[{"!", 
+           RowBox[{"FreeQ", "[", 
+            RowBox[{"\[Gamma]", ",", "\[Beta]"}], "]"}]}]}]}]}], ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          SuperscriptBox[
+           RowBox[{"\[Delta]", "[", 
+            RowBox[{"\[Alpha]_", ",", "\[Beta]_"}], "]"}], "2"], 
+          RowBox[{"Longest", "[", "\[Gamma]_", "]"}]}], ".."}], 
+        "\[RuleDelayed]", 
+        RowBox[{
+         RowBox[{"\[ScriptCapitalN]", 
+          RowBox[{"(", 
+           RowBox[{"\[Gamma]", "/.", 
+            RowBox[{"\[Beta]", "\[Rule]", "\[Alpha]"}]}], ")"}]}], "/;", 
+         RowBox[{
+          RowBox[{"!", 
+           RowBox[{"FreeQ", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"\[Alpha]", ",", "\[Beta]"}], "}"}], ",", "intP"}], 
+            "]"}]}], "&&", 
+          RowBox[{"FreeQ", "[", 
+           RowBox[{"\[Gamma]", ",", "\[Beta]"}], "]"}]}]}]}], ",", 
+       RowBox[{
+        RowBox[{"\[Delta]", "[", 
+         RowBox[{"\[Alpha]_", ",", "\[Alpha]_"}], "]"}], "\[RuleDelayed]", 
+        RowBox[{"\[ScriptCapitalN]", "/;", 
+         RowBox[{"!", 
+          RowBox[{"FreeQ", "[", 
+           RowBox[{"\[Alpha]", ",", "intP"}], "]"}]}]}]}]}], 
+      "\[IndentingNewLine]", "}"}]}], "&"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"UndEdgesRule", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"\[Alpha]_", "\[UndirectedEdge]", "\[Beta]_"}], ")"}], 
+    "\[RuleDelayed]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"\[Beta]", "\[UndirectedEdge]", "\[Alpha]"}], ")"}], "/;", 
+     RowBox[{"OrderedQ", "[", 
+      RowBox[{"{", 
+       RowBox[{"\[Beta]", ",", "\[Alpha]"}], "}"}], "]"}]}]}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"IsomorphicDiagramQ", "[", "intP_", "]"}], ":=", 
+  RowBox[{"Function", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y"}], "}"}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"EdgeList", "[", "y", "]"}], "/.", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Thread", "[", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"List", "@@", "intP"}], ")"}], "\[Rule]", "#"}], "]"}],
+             "&"}], "/@", 
+           RowBox[{"Permutations", "[", 
+            RowBox[{"List", "@@", "intP"}], "]"}]}], ")"}]}], "//.", 
+        "UndEdgesRule"}], ")"}], "//", 
+      RowBox[{"Map", "[", 
+       RowBox[{
+        RowBox[{"ContainsExactly", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"EdgeList", "[", "x", "]"}], "//.", "UndEdgesRule"}], ",", 
+          "#"}], "]"}], "&"}], "]"}]}], "//", 
+     RowBox[{"Apply", "[", "Or", "]"}]}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"GatherDiagrams", "[", "intP_", "]"}], ":=", 
+  RowBox[{"Association", "@*", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Graph", "[", 
+       RowBox[{
+        RowBox[{"#1", "\[LeftDoubleBracket]", 
+         RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], ",", 
+        RowBox[{"VertexLabels", "\[Rule]", 
+         RowBox[{"Thread", "[", 
+          RowBox[{
+           RowBox[{"Complement", "[", 
+            RowBox[{
+             RowBox[{"VertexList", "[", 
+              RowBox[{"#1", "\[LeftDoubleBracket]", 
+               RowBox[{"1", ",", "1"}], "\[RightDoubleBracket]"}], "]"}], ",", 
+             RowBox[{"List", "@@", "intP"}]}], "]"}], "\[Rule]", 
+           "Automatic"}], "]"}]}]}], "]"}], "\[Rule]", 
+      RowBox[{"Simplify", "@", 
+       RowBox[{"Total", "[", 
+        RowBox[{"#1", "\[LeftDoubleBracket]", 
+         RowBox[{"All", ",", "2"}], "\[RightDoubleBracket]"}], "]"}]}]}], 
+     "&"}], "]"}], "@*", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"Gather", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"IsomorphicDiagramQ", "[", "intP", "]"}], "[", 
+         RowBox[{
+          RowBox[{"First", "@", "#1"}], ",", 
+          RowBox[{"First", "@", "#2"}]}], "]"}], "&"}]}], "]"}], "&"}], 
+    ")"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"AmputatedDiagramQ", "[", "intP_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"KEdgeConnectedGraphQ", "[", 
+    RowBox[{
+     RowBox[{"Graph", "@", 
+      RowBox[{
+       RowBox[{"DeleteCases", "[", 
+        RowBox[{
+         RowBox[{"\[Alpha]_", "\[UndirectedEdge]", "\[Beta]_"}], "/;", 
+         RowBox[{
+          RowBox[{"FreeQ", "[", 
+           RowBox[{"\[Alpha]", ",", "intP"}], "]"}], "\[Xor]", 
+          RowBox[{"FreeQ", "[", 
+           RowBox[{"\[Beta]", ",", "intP"}], "]"}]}]}], "]"}], "@", 
+       RowBox[{"EdgeList", "[", "#1", "]"}]}]}], ",", "2"}], "]"}], 
+   "&"}]}]}], "Input",
+ CellChangeTimes->{{3.7507768320432243`*^9, 3.750776972175812*^9}, {
+   3.75077707523006*^9, 3.750777089845087*^9}, {3.7507771309436293`*^9, 
+   3.75077716907386*^9}, {3.750778063944748*^9, 3.750778113984632*^9}, {
+   3.750778147758027*^9, 3.7507781586254673`*^9}, {3.750778196866065*^9, 
+   3.750778254962772*^9}, {3.750778591418582*^9, 3.750778834994282*^9}, {
+   3.750778927636401*^9, 3.7507789331905937`*^9}, {3.750779807343194*^9, 
+   3.750779812114615*^9}, {3.750780024877572*^9, 3.7507800494518747`*^9}, {
+   3.7507815333728724`*^9, 3.7507815568804817`*^9}, {3.750781659354232*^9, 
+   3.750781663009157*^9}, {3.7507818389657516`*^9, 3.750781900760069*^9}, {
+   3.750781972099063*^9, 3.750781972496524*^9}, {3.750782910772142*^9, 
+   3.750782915066127*^9}, {3.750782948800498*^9, 3.75078294912507*^9}, {
+   3.750783014628286*^9, 3.750783152290822*^9}, {3.7507832188694468`*^9, 
+   3.7507832247638683`*^9}, {3.750783306863728*^9, 3.750783328423662*^9}, 
+   3.750783777342836*^9, {3.7507838234489326`*^9, 3.750783840877924*^9}, {
+   3.750783902750072*^9, 3.750783938655558*^9}, 3.7507839734558287`*^9, {
+   3.750784064020144*^9, 3.750784120301073*^9}, {3.750784156526667*^9, 
+   3.750784156527502*^9}, {3.75078430103699*^9, 3.750784338807028*^9}, {
+   3.7507845917544537`*^9, 3.750784713414665*^9}, {3.750784771676342*^9, 
+   3.750784832126772*^9}, {3.75078487822589*^9, 3.750784906295927*^9}, {
+   3.750784937739397*^9, 3.750784941522271*^9}, {3.7507849961682177`*^9, 
+   3.750785009304059*^9}, {3.750785041034525*^9, 3.750785084226821*^9}, {
+   3.7507853305736094`*^9, 3.750785331337564*^9}, 3.75078537259016*^9, {
+   3.750785419007683*^9, 3.750785424462369*^9}, 3.7507854765952187`*^9, {
+   3.75078553694381*^9, 3.750785552737934*^9}, {3.750785612675786*^9, 
+   3.750785638358279*^9}, {3.750793032608243*^9, 3.750793042131823*^9}, {
+   3.7507967910401363`*^9, 3.7507967952947893`*^9}, {3.750796866462904*^9, 
+   3.7507968708335257`*^9}, {3.750796930288742*^9, 3.750796948935245*^9}, {
+   3.7507969915080223`*^9, 3.750797005384427*^9}, {3.750862199772951*^9, 
+   3.750862223552987*^9}, {3.750862270325766*^9, 3.750862274975347*^9}, 
+   3.750862480497616*^9, 3.750868737583255*^9, {3.750869160362376*^9, 
+   3.7508691961359043`*^9}, {3.7508719599550247`*^9, 3.75087201903309*^9}, {
+   3.750872358925147*^9, 3.75087239767787*^9}, {3.750878880192274*^9, 
+   3.75087888562237*^9}, {3.750879556492697*^9, 3.750879556966655*^9}, {
+   3.750880493398439*^9, 3.750880499033984*^9}, {3.750944337765293*^9, 
+   3.750944383526533*^9}, {3.75094460156217*^9, 3.75094462504827*^9}, {
+   3.7509449230562153`*^9, 3.750944989201661*^9}, {3.750945064424811*^9, 
+   3.7509450955835667`*^9}, {3.750946541093731*^9, 3.750946552725151*^9}, {
+   3.750946592587761*^9, 3.750946595414021*^9}, {3.7509466354649076`*^9, 
+   3.750946636054549*^9}, {3.7509480856286163`*^9, 3.750948204090407*^9}, {
+   3.750949034673476*^9, 3.7509490797196608`*^9}, {3.7509499719682007`*^9, 
+   3.7509500072629967`*^9}, {3.7509503711214237`*^9, 3.750950388638582*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"e6a26e16-f57b-48cb-a41c-9d917bd9437c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[ScriptCapitalO]", "(", 
+    SuperscriptBox["\[Lambda]", "1"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "7629ff28-0fdc-4738-95b0-d265841602dc"],
+ " using Wick (vertex)"
+}], "Section",
+ CellChangeTimes->{{3.75087392965342*^9, 3.750873978956341*^9}, {
+  3.7508740467733507`*^9, 3.75087405825532*^9}, {3.750880720216935*^9, 
+  3.750880725788582*^9}},ExpressionUUID->"1e85e0a8-3dbc-4378-9b29-\
+4b824be892bc"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FourPointConnected1st", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        FractionBox[
+         RowBox[{
+          RowBox[{"-", "I"}], " ", "\[Lambda]"}], "8"], 
+        RowBox[{"\[LeftAngleBracket]", 
+         RowBox[{
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"i", ",", "x1"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"j", ",", "x2"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"k", ",", "x3"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"l", ",", "x4"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"p", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"p", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"q", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"q", ",", "z"}], "]"}]}], "\[RightAngleBracket]"}]}], "//", 
+       RowBox[{"SumRule", "[", 
+        RowBox[{"p", "|", "q"}], "]"}]}], "//", "\[CapitalDelta]ToGraph"}], "//", 
+     RowBox[{"Select", "[", 
+      RowBox[{
+       RowBox[{"WeaklyConnectedGraphQ", "[", 
+        RowBox[{"First", "@", "#"}], "]"}], "&"}], "]"}]}], "//", 
+    RowBox[{"GatherDiagrams", "[", 
+     RowBox[{"{", "z", "}"}], "]"}]}], "//", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{"#", "/.", 
+      RowBox[{"\[Delta]", "\[Rule]", "KroneckerDelta"}]}], "&"}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7506924887913237`*^9, 3.7506925446198*^9}, {
+   3.750693003583136*^9, 3.7506930361694193`*^9}, 3.7506932927672977`*^9, 
+   3.750693386866384*^9, {3.750693514030882*^9, 3.750693579778221*^9}, 
+   3.7506940352647877`*^9, {3.750694078699006*^9, 3.7506941091528807`*^9}, {
+   3.7507769840295753`*^9, 3.750777044351663*^9}, {3.7507771197760057`*^9, 
+   3.7507771231762037`*^9}, {3.750777155455689*^9, 3.750777302457348*^9}, {
+   3.750777459877521*^9, 3.7507775941731863`*^9}, {3.750785490954508*^9, 
+   3.7507855035566597`*^9}, {3.7507968820057707`*^9, 3.75079691792839*^9}, {
+   3.750796954184237*^9, 3.750796977015378*^9}, {3.750797016445149*^9, 
+   3.7507970620028152`*^9}, {3.7508622337781467`*^9, 3.750862234159687*^9}, {
+   3.7508622943363533`*^9, 3.750862370222003*^9}, {3.7508804633033648`*^9, 
+   3.750880471170628*^9}, {3.750880740081139*^9, 3.750880769811633*^9}, {
+   3.750944637363225*^9, 3.750944646173359*^9}, {3.750945121815845*^9, 
+   3.750945135876899*^9}, {3.750948309373107*^9, 3.750948310668735*^9}, 
+   3.7509486025404797`*^9},
+ CellLabel->"In[28]:=",ExpressionUUID->"a3ec842b-d491-404f-8a11-34ec60c9f489"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   GraphicsBox[
+    NamespaceBox["NetworkGraphics",
+     DynamicModuleBox[{Typeset`graph = HoldComplete[
+       Graph[{$CellContext`x1, $CellContext`z, $CellContext`x2, \
+$CellContext`x3, $CellContext`x4}, {Null, {{1, 2}, {3, 2}, {4, 2}, {5, 2}}}, {
+        GraphLayout -> {"Dimension" -> 2}, 
+         VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+           Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+           Automatic}}]]}, 
+      TagBox[GraphicsGroupBox[{
+         {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+          {Arrowheads[0.], 
+           ArrowBox[{{0., 0.}, {1., 0.6666666666666666}}, 
+            0.02261146496815286]}, 
+          {Arrowheads[0.], 
+           ArrowBox[{{1., 0.6666666666666666}, {0.6666666666666666, 0.}}, 
+            0.02261146496815286]}, 
+          {Arrowheads[0.], 
+           ArrowBox[{{1., 0.6666666666666666}, {1.3333333333333333`, 0.}}, 
+            0.02261146496815286]}, 
+          {Arrowheads[0.], 
+           ArrowBox[{{1., 0.6666666666666666}, {2., 0.}}, 
+            0.02261146496815286]}}, 
+         {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[
+          0.7]}], {DiskBox[{0., 0.}, 0.02261146496815286], 
+           InsetBox["x1", 
+            Offset[{2, 2}, {0.02261146496815286, 0.02261146496815286}], 
+            ImageScaled[{0, 0}],
+            BaseStyle->"Graphics"]}, 
+          DiskBox[{1., 0.6666666666666666}, 0.02261146496815286], {
+           DiskBox[{0.6666666666666666, 0.}, 0.02261146496815286], 
+           InsetBox["x2", 
+            Offset[{2, 2}, {0.6892781316348195, 0.02261146496815286}], 
+            ImageScaled[{0, 0}],
+            BaseStyle->"Graphics"]}, {
+           DiskBox[{1.3333333333333333, 0.}, 0.02261146496815286], 
+           InsetBox["x3", 
+            Offset[{2, 2}, {1.355944798301486, 0.02261146496815286}], 
+            ImageScaled[{0, 0}],
+            BaseStyle->"Graphics"]}, {DiskBox[{2., 0.}, 0.02261146496815286], 
+           InsetBox["x4", 
+            Offset[{2, 2}, {2.022611464968153, 0.02261146496815286}], 
+            ImageScaled[{0, 0}],
+            BaseStyle->"Graphics"]}}}],
+       MouseAppearanceTag["NetworkGraphics"]],
+      AllowKernelInitialization->False]],
+    DefaultBaseStyle->{
+     "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+    
+    FormatType->TraditionalForm,
+    FrameTicks->None], "\[Rule]", 
+   RowBox[{
+    RowBox[{"-", "\[ImaginaryI]"}], " ", "\[Lambda]", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       TemplateBox[{RowBox[{"i", ",", "l"}]},
+        "KroneckerDeltaSeq"], " ", 
+       TemplateBox[{RowBox[{"j", ",", "k"}]},
+        "KroneckerDeltaSeq"]}], "+", 
+      RowBox[{
+       TemplateBox[{RowBox[{"i", ",", "k"}]},
+        "KroneckerDeltaSeq"], " ", 
+       TemplateBox[{RowBox[{"j", ",", "l"}]},
+        "KroneckerDeltaSeq"]}], "+", 
+      RowBox[{
+       TemplateBox[{RowBox[{"i", ",", "j"}]},
+        "KroneckerDeltaSeq"], " ", 
+       TemplateBox[{RowBox[{"k", ",", "l"}]},
+        "KroneckerDeltaSeq"]}]}], ")"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{
+  3.75069319953965*^9, {3.75069324045804*^9, 3.750693387124337*^9}, 
+   3.750693426779806*^9, 3.750693496641459*^9, {3.750693535131624*^9, 
+   3.7506935426324053`*^9}, {3.7506935745730352`*^9, 
+   3.7506935801015453`*^9}, {3.750694078712511*^9, 3.750694109422071*^9}, {
+   3.7507770446108627`*^9, 3.75077712430892*^9}, {3.750777158429002*^9, 
+   3.750777302632509*^9}, 3.750777607471959*^9, 3.750777947969385*^9, {
+   3.750778185615143*^9, 3.750778189688428*^9}, 3.750778260046836*^9, 
+   3.750785503790696*^9, {3.75079689318209*^9, 3.750796914868059*^9}, {
+   3.750796954914431*^9, 3.750796977390333*^9}, {3.750797021096253*^9, 
+   3.750797062179488*^9}, 3.7508621891491613`*^9, {3.750862228346878*^9, 
+   3.750862248770844*^9}, {3.75086229851933*^9, 3.7508623706272583`*^9}, 
+   3.7508692088625813`*^9, {3.750880456818451*^9, 3.750880477223105*^9}, 
+   3.75088051091707*^9, 3.750880740830215*^9, 3.750880773487439*^9, 
+   3.750944388786105*^9, {3.7509446385025387`*^9, 3.7509446464307337`*^9}, {
+   3.750945132019945*^9, 3.750945136324275*^9}, 3.750946557865329*^9, 
+   3.750948049663146*^9, 3.750948206536578*^9, 3.750948316268062*^9, 
+   3.7509486103816433`*^9, {3.750950000997691*^9, 3.7509500453872547`*^9}, 
+   3.750950393084713*^9},
+ CellLabel->"Out[28]=",ExpressionUUID->"773ec4f6-0617-4cf4-8621-1a18a9135ee6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"GraphTo\[CapitalDelta]", "@", 
+   RowBox[{
+    RowBox[{"KeyValueMap", "[", "List", "]"}], "@", 
+    "FourPointConnected1st"}]}], "//", 
+  RowBox[{
+   RowBox[{"Collect", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Expand", "@", "#"}], "/.", 
+      RowBox[{"\[Delta]", "\[Rule]", "KroneckerDelta"}]}], ",", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"\[CapitalDelta]", "[", "__", "]"}], ".."}], ")"}], ",", 
+     RowBox[{"Highlighted", "@*", "Simplify"}]}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.7509483134575777`*^9, 3.750948324884984*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"0c07a8c2-ee0f-44ef-b9b7-e1228f31d979"],
+
+Cell[BoxData[
+ RowBox[{
+  TemplateBox[{RowBox[{
+      RowBox[{"-", "\[ImaginaryI]"}], " ", "\[Lambda]", " ", 
+      RowBox[{"(", 
+        RowBox[{
+          RowBox[{
+            TemplateBox[{
+              RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+            TemplateBox[{
+              RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+          RowBox[{
+            TemplateBox[{
+              RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+            TemplateBox[{
+              RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+          RowBox[{
+            TemplateBox[{
+              RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+            TemplateBox[{
+              RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+    FrameStyle -> None},
+   "Highlighted"], " ", 
+  RowBox[{"\[CapitalDelta]", "[", 
+   RowBox[{"x1", ",", "z"}], "]"}], " ", 
+  RowBox[{"\[CapitalDelta]", "[", 
+   RowBox[{"x2", ",", "z"}], "]"}], " ", 
+  RowBox[{"\[CapitalDelta]", "[", 
+   RowBox[{"x3", ",", "z"}], "]"}], " ", 
+  RowBox[{"\[CapitalDelta]", "[", 
+   RowBox[{"x4", ",", "z"}], "]"}]}]], "Output",
+ CellChangeTimes->{{3.750948314321945*^9, 3.7509483251546297`*^9}, 
+   3.750948612326681*^9, {3.750950020153853*^9, 3.750950045444189*^9}, 
+   3.750950394648932*^9},
+ CellLabel->"Out[29]=",ExpressionUUID->"20de2dbb-f505-4513-b020-6477ab6f29f6"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[ScriptCapitalO]", "(", 
+    SuperscriptBox["\[Lambda]", "2"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "abf70de1-ea6d-4eee-a882-c769e079f8da"],
+ " using Wick"
+}], "Section",
+ CellChangeTimes->{{3.75087392965342*^9, 3.750873978956341*^9}, {
+  3.7508740467733507`*^9, 
+  3.75087405825532*^9}},ExpressionUUID->"adab82ac-3820-4d5a-a78b-\
+55dc465c060c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FourPointConnected2nd", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        FractionBox["1", "2"], 
+        SuperscriptBox[
+         RowBox[{"(", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "I"}], " ", "\[Lambda]"}], "8"], ")"}], "2"], 
+        RowBox[{"\[LeftAngleBracket]", 
+         RowBox[{
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"i", ",", "x1"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"j", ",", "x2"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"k", ",", "x3"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"l", ",", "x4"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"p", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"p", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"q", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"q", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"r", ",", "w"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"r", ",", "w"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"s", ",", "w"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"s", ",", "w"}], "]"}]}], "\[RightAngleBracket]"}]}], "//", 
+       RowBox[{"SumRule", "[", 
+        RowBox[{"r", "|", "s", "|", "p", "|", "q"}], "]"}]}], "//", 
+      "\[CapitalDelta]ToGraph"}], "//", 
+     RowBox[{"Select", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"WeaklyConnectedGraphQ", "[", 
+         RowBox[{"First", "@", "#"}], "]"}], "&&", 
+        RowBox[{
+         RowBox[{"AmputatedDiagramQ", "[", 
+          RowBox[{"z", "|", "w"}], "]"}], "[", 
+         RowBox[{"First", "@", "#"}], "]"}]}], "&"}], "]"}]}], "//", 
+    RowBox[{"GatherDiagrams", "[", 
+     RowBox[{"z", "|", "w"}], "]"}]}], "//", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{"#", "/.", 
+      RowBox[{"\[Delta]", "\[Rule]", "KroneckerDelta"}]}], "&"}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.750867800398177*^9, 3.750867849806993*^9}, {
+   3.750867935887529*^9, 3.750867936174231*^9}, {3.7508690908735647`*^9, 
+   3.750869094611154*^9}, {3.7508692459665213`*^9, 3.750869303632297*^9}, {
+   3.750869391443009*^9, 3.750869410001199*^9}, {3.7508694422114*^9, 
+   3.7508695082583513`*^9}, {3.750869549703473*^9, 3.750869564010322*^9}, {
+   3.750869613831232*^9, 3.7508696518406887`*^9}, {3.7508696827700777`*^9, 
+   3.7508698655406017`*^9}, {3.750869961125842*^9, 3.750870145459509*^9}, {
+   3.750870542036099*^9, 3.7508705425357933`*^9}, {3.75088077778792*^9, 
+   3.750880788391024*^9}, {3.7509373212423687`*^9, 3.750937328059229*^9}, {
+   3.750943511182925*^9, 3.750943552198814*^9}, {3.750944204476581*^9, 
+   3.750944312293747*^9}, {3.750944396094372*^9, 3.750944415388831*^9}, {
+   3.750944449798373*^9, 3.7509445157840357`*^9}, {3.750944557795248*^9, 
+   3.7509445622561607`*^9}, {3.7509446590939217`*^9, 3.750944753264838*^9}, {
+   3.750944810766597*^9, 3.750944842261983*^9}, 3.7509449367912416`*^9, {
+   3.750945000473446*^9, 3.750945041510716*^9}, {3.750946565570098*^9, 
+   3.750946611933548*^9}, {3.750946690207513*^9, 3.750946707864604*^9}, {
+   3.7509467659034967`*^9, 3.7509467660797443`*^9}, 3.750948598546256*^9},
+ CellLabel->"In[30]:=",ExpressionUUID->"7767b495-b135-469e-beef-f296221c7169"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x3, $CellContext`x4, \
+$CellContext`z, $CellContext`x1, $CellContext`x2}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 4}, {6, 4}}}, {
+         GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6945965460942145, 0.6468450396362879}, {
+             0.0003826972752043467, 0.0015437780032689918`}}, 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6945965460942145, 0.6468450396362879}, {0., 
+             1.2919260931647834`}}, 0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{0.6945965460942145, 
+             0.6468450396362879}, {1.2869385696281672`, 0.8416621257920114}, {
+             1.8792846034302229`, 0.6468572332932186}}], 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{0.6945965460942145, 
+             0.6468450396362879}, {1.2869425798962812`, 0.4520401471377685}, {
+             1.8792846034302229`, 0.6468572332932186}}], 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.8792846034302229`, 0.6468572332932186}, {
+             2.573367157057923, 1.2934833371800165`}}, 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.8792846034302229`, 0.6468572332932186}, {
+             2.573023389494624, 0.}}, 0.027099804810058623`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{0.6945965460942145, 0.6468450396362879}, 
+            0.027099804810058623], {
+            DiskBox[{0.0003826972752043467, 0.0015437780032689918}, 
+             0.027099804810058623], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.02748250208526297, 0.028643582813327614}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 1.2919260931647834}, 0.027099804810058623], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {0.027099804810058623, 1.319025897974842}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{1.8792846034302229, 0.6468572332932186}, 
+            0.027099804810058623], {
+            DiskBox[{2.573367157057923, 1.2934833371800165}, 
+             0.027099804810058623], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {2.6004669618679817, 1.320583141990075}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.573023389494624, 0.}, 0.027099804810058623], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {2.600123194304683, 0.027099804810058623}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox["1", "2"]}], " ", 
+     SuperscriptBox["\[Lambda]", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x2, $CellContext`x4, \
+$CellContext`z, $CellContext`x1, $CellContext`x3}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 4}, {6, 4}}}, {
+         GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6945965460942145, 0.6468450396362879}, {
+             0.0003826972752043467, 0.0015437780032689918`}}, 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6945965460942145, 0.6468450396362879}, {0., 
+             1.2919260931647834`}}, 0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{0.6945965460942145, 
+             0.6468450396362879}, {1.2869385696281672`, 0.8416621257920114}, {
+             1.8792846034302229`, 0.6468572332932186}}], 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{0.6945965460942145, 
+             0.6468450396362879}, {1.2869425798962812`, 0.4520401471377685}, {
+             1.8792846034302229`, 0.6468572332932186}}], 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.8792846034302229`, 0.6468572332932186}, {
+             2.573367157057923, 1.2934833371800165`}}, 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.8792846034302229`, 0.6468572332932186}, {
+             2.573023389494624, 0.}}, 0.027099804810058623`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{0.6945965460942145, 0.6468450396362879}, 
+            0.027099804810058623], {
+            DiskBox[{0.0003826972752043467, 0.0015437780032689918}, 
+             0.027099804810058623], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {0.02748250208526297, 0.028643582813327614}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 1.2919260931647834}, 0.027099804810058623], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {0.027099804810058623, 1.319025897974842}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{1.8792846034302229, 0.6468572332932186}, 
+            0.027099804810058623], {
+            DiskBox[{2.573367157057923, 1.2934833371800165}, 
+             0.027099804810058623], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {2.6004669618679817, 1.320583141990075}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.573023389494624, 0.}, 0.027099804810058623], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {2.600123194304683, 0.027099804810058623}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox["1", "2"]}], " ", 
+     SuperscriptBox["\[Lambda]", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x1, $CellContext`x4, \
+$CellContext`z, $CellContext`x2, $CellContext`x3}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 4}, {6, 4}}}, {
+         GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6945965460942145, 0.6468450396362879}, {
+             0.0003826972752043467, 0.0015437780032689918`}}, 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6945965460942145, 0.6468450396362879}, {0., 
+             1.2919260931647834`}}, 0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{0.6945965460942145, 
+             0.6468450396362879}, {1.2869385696281672`, 0.8416621257920114}, {
+             1.8792846034302229`, 0.6468572332932186}}], 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{0.6945965460942145, 
+             0.6468450396362879}, {1.2869425798962812`, 0.4520401471377685}, {
+             1.8792846034302229`, 0.6468572332932186}}], 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.8792846034302229`, 0.6468572332932186}, {
+             2.573367157057923, 1.2934833371800165`}}, 
+             0.027099804810058623`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.8792846034302229`, 0.6468572332932186}, {
+             2.573023389494624, 0.}}, 0.027099804810058623`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{0.6945965460942145, 0.6468450396362879}, 
+            0.027099804810058623], {
+            DiskBox[{0.0003826972752043467, 0.0015437780032689918}, 
+             0.027099804810058623], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {0.02748250208526297, 0.028643582813327614}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 1.2919260931647834}, 0.027099804810058623], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {0.027099804810058623, 1.319025897974842}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{1.8792846034302229, 0.6468572332932186}, 
+            0.027099804810058623], {
+            DiskBox[{2.573367157057923, 1.2934833371800165}, 
+             0.027099804810058623], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {2.6004669618679817, 1.320583141990075}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.573023389494624, 0.}, 0.027099804810058623], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {2.600123194304683, 0.027099804810058623}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox["1", "2"]}], " ", 
+     SuperscriptBox["\[Lambda]", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "k"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"j", ",", "l"}]},
+            "KroneckerDeltaSeq"]}], "+", 
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "j"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"k", ",", "l"}]},
+            "KroneckerDeltaSeq"]}]}], ")"}]}]}], ")"}]}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{
+  3.750944461736765*^9, {3.750944502140604*^9, 3.7509445170699167`*^9}, 
+   3.750944559899056*^9, {3.750944708363624*^9, 3.750944754251515*^9}, {
+   3.7509448236325397`*^9, 3.750944843227378*^9}, 3.7509450061574087`*^9, {
+   3.750945036182599*^9, 3.750945042695511*^9}, 3.7509451013442593`*^9, 
+   3.750945153498098*^9, {3.750946580790472*^9, 3.750946612978923*^9}, 
+   3.750946708777561*^9, 3.750946964083213*^9, 3.750948051021289*^9, 
+   3.750948210266019*^9, 3.750948614493952*^9, {3.750950036353141*^9, 
+   3.750950061711729*^9}, 3.7509503963196793`*^9},
+ CellLabel->"Out[30]=",ExpressionUUID->"2fde0083-8a44-429b-97dc-5f3950748f08"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"GraphTo\[CapitalDelta]", "@", 
+   RowBox[{
+    RowBox[{"KeyValueMap", "[", "List", "]"}], "@", 
+    "FourPointConnected2nd"}]}], "//", 
+  RowBox[{
+   RowBox[{"Collect", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Expand", "@", "#"}], "/.", 
+      RowBox[{"\[Delta]", "\[Rule]", "KroneckerDelta"}]}], ",", 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"\[CapitalDelta]", "[", 
+        RowBox[{"w", ",", "z"}], "]"}], "p_."], 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"\[CapitalDelta]", "[", "__", "]"}], ".."}], ")"}]}], ",", 
+     RowBox[{"Highlighted", "@*", "Simplify"}]}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.7509482229881268`*^9, 3.7509482783887863`*^9}, 
+   3.750948331965838*^9},
+ CellLabel->"In[31]:=",ExpressionUUID->"87ec2f14-4a58-44bc-80f4-c00f97dec021"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   TemplateBox[{RowBox[{
+       RowBox[{"-", 
+         FractionBox["1", "2"]}], " ", 
+       SuperscriptBox["\[Lambda]", "2"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x3"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       RowBox[{"-", 
+         FractionBox["1", "2"]}], " ", 
+       SuperscriptBox["\[Lambda]", "2"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x2"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       RowBox[{"-", 
+         FractionBox["1", "2"]}], " ", 
+       SuperscriptBox["\[Lambda]", "2"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], 
+               ")"}]}]}], ")"}]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x1"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "z"}], "]"}]}]}]], "Output",
+ CellChangeTimes->{{3.7509482320600863`*^9, 3.750948279470899*^9}, 
+   3.750948350407981*^9, 3.750948615673422*^9, 3.750950061911427*^9, 
+   3.750950398504835*^9},
+ CellLabel->"Out[31]=",ExpressionUUID->"0890a022-a2e2-4efc-a459-908063349439"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[ScriptCapitalO]", "(", 
+    SuperscriptBox["\[Lambda]", "3"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "648fe18c-caa2-4bf2-9be8-c9504d7d5fd7"],
+ " using Wick"
+}], "Section",
+ CellChangeTimes->{{3.7509435798595343`*^9, 
+  3.750943585692115*^9}},ExpressionUUID->"2149cb01-086d-46e3-8f38-\
+41367ba7a7c1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FourPointConnected3rd", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        FractionBox["1", "6"], 
+        SuperscriptBox[
+         RowBox[{"(", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"-", "I"}], " ", "\[Lambda]"}], "8"], ")"}], "3"], 
+        RowBox[{"\[LeftAngleBracket]", 
+         RowBox[{
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"i", ",", "x1"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"j", ",", "x2"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"k", ",", "x3"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"l", ",", "x4"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"p", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"p", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"q", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"q", ",", "z"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"r", ",", "w"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"r", ",", "w"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"s", ",", "w"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"s", ",", "w"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"t", ",", "y"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"t", ",", "y"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"u", ",", "y"}], "]"}], "\[CenterDot]", 
+          RowBox[{"\[Phi]", "[", 
+           RowBox[{"u", ",", "y"}], "]"}]}], "\[RightAngleBracket]"}]}], "//", 
+       RowBox[{"SumRule", "[", 
+        RowBox[{"r", "|", "s", "|", "p", "|", "q", "|", "t", "|", "u"}], 
+        "]"}]}], "//", "\[CapitalDelta]ToGraph"}], "//", 
+     RowBox[{"Select", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"WeaklyConnectedGraphQ", "[", 
+         RowBox[{"First", "@", "#"}], "]"}], "&&", 
+        RowBox[{
+         RowBox[{"AmputatedDiagramQ", "[", 
+          RowBox[{"z", "|", "w", "|", "y"}], "]"}], "[", 
+         RowBox[{"First", "@", "#"}], "]"}]}], "&"}], "]"}]}], "//", 
+    RowBox[{"GatherDiagrams", "[", 
+     RowBox[{"z", "|", "w", "|", "y"}], "]"}]}], "//", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{"#", "/.", 
+      RowBox[{"\[Delta]", "\[Rule]", "KroneckerDelta"}]}], "&"}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.750943589966659*^9, 3.750943641139533*^9}, {
+  3.750944181206439*^9, 3.750944183725218*^9}, {3.750945400499021*^9, 
+  3.750945408389505*^9}, {3.75094558259522*^9, 3.750945590827736*^9}, {
+  3.7509467493700457`*^9, 3.75094675060909*^9}, {3.7509485828097467`*^9, 
+  3.750948593723637*^9}},
+ CellLabel->"In[32]:=",ExpressionUUID->"86bfe141-3350-4779-b6e9-86e5972cfdd5"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`y, $CellContext`z, \
+$CellContext`x1, $CellContext`x2, $CellContext`x3, $CellContext`x4}, {
+         Null, {{1, 2}, {1, 2}, {1, 3}, {1, 3}, {4, 3}, {5, 3}, {6, 2}, {7, 
+          2}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8477176211373334`, 
+             0.5950742486022067}, {1.2695082270969855`, 
+             0.40494565570639246`}, {0.6913188815915208, 
+             0.5951352083558892}}], 0.03503186447580588]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8477176211373334`, 
+             0.5950742486022067}, {1.2695282756318707`, 0.7852638012513281}, {
+             0.6913188815915208, 0.5951352083558892}}], 0.03503186447580588]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8477176211373334`, 
+             0.5950742486022067}, {2.426634150300077, 0.7855020087615725}, {
+             3.005570164270328, 0.5951334942813822}}], 
+             0.03503186447580588]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8477176211373334`, 
+             0.5950742486022067}, {2.4266536351075785`, 
+             0.40470573412100735`}, {3.005570164270328, 0.5951334942813822}}],
+              0.03503186447580588]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6913188815915208, 0.5951352083558892}, {0., 
+             0.0017156847589969715`}}, 0.03503186447580588]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6913188815915208, 0.5951352083558892}, {
+             0.00014990511374546323`, 1.1886700115114825`}}, 
+             0.03503186447580588]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{3.005570164270328, 0.5951334942813822}, {
+             3.6959933583760884`, 1.1903808617158649`}}, 
+             0.03503186447580588]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{3.005570164270328, 0.5951334942813822}, {
+             3.6961245077260205`, 0.}}, 0.03503186447580588]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.8477176211373334, 0.5950742486022067}, 
+            0.03503186447580588], 
+           DiskBox[{0.6913188815915208, 0.5951352083558892}, 
+            0.03503186447580588], 
+           DiskBox[{3.005570164270328, 0.5951334942813822}, 
+            0.03503186447580588], {
+            DiskBox[{3.6959933583760884, 1.1903808617158649}, 
+             0.03503186447580588], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {3.7310252228518945, 1.2254127261916707}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{3.6961245077260205, 0.}, 0.03503186447580588], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {3.7311563722018266, 0.03503186447580588}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 0.0017156847589969715}, 0.03503186447580588], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.03503186447580588, 0.03674754923480285}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.00014990511374546323, 1.1886700115114825}, 
+             0.03503186447580588], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {0.03518176958955134, 1.2237018759872884}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"4", " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"4", " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"12", "+", 
+          RowBox[{"6", " ", "\[ScriptCapitalN]"}], "+", 
+          SuperscriptBox["\[ScriptCapitalN]", "2"]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`y, $CellContext`z, \
+$CellContext`x1, $CellContext`x2, $CellContext`x3, $CellContext`x4}, {
+         Null, {{1, 2}, {1, 2}, {1, 3}, {1, 3}, {4, 3}, {5, 2}, {6, 3}, {7, 
+          2}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8484245599075833`, 
+             0.5946173958692942}, {2.42668407799102, 0.7849751009523239}, {
+             3.0050497549428012`, 0.5949401834695571}}], 
+             0.03503714107063073]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8484245599075833`, 
+             0.5946173958692942}, {2.4267902368593597`, 0.4045824783869468}, {
+             3.0050497549428012`, 0.5949401834695571}}], 
+             0.03503714107063073]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8484245599075833`, 
+             0.5946173958692942}, {1.2696219120363113`, 0.4044162694038779}, {
+             0.6909120694805126, 0.594899580537883}}], 
+             0.03503714107063073]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8484245599075833`, 
+             0.5946173958692942}, {1.269714717351798, 0.7851007070028206}, {
+             0.6909120694805126, 0.594899580537883}}], 
+             0.03503714107063073]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{3.0050497549428012`, 0.5949401834695571}, {
+             3.6958299261695657`, 1.189083593728161}}, 
+             0.03503714107063073]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{3.0050497549428012`, 0.5949401834695571}, {
+             3.696922959516494, 0.001870157421982932}}, 0.03503714107063073]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6909120694805126, 0.594899580537883}, {
+             0.0017458711924247527`, 1.1911910675115358`}}, 
+             0.03503714107063073]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6909120694805126, 0.594899580537883}, {0., 0.}}, 
+             0.03503714107063073]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.8484245599075833, 0.5946173958692942}, 
+            0.03503714107063073], 
+           DiskBox[{3.0050497549428012, 0.5949401834695571}, 
+            0.03503714107063073], 
+           DiskBox[{0.6909120694805126, 0.594899580537883}, 
+            0.03503714107063073], {
+            DiskBox[{0.0017458711924247527, 1.1911910675115358}, 
+             0.03503714107063073], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {0.036783012263055484, 1.2262282085821665}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{3.6958299261695657, 1.189083593728161}, 
+             0.03503714107063073], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {3.7308670672401965, 1.2241207347987917}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {DiskBox[{0., 0.}, 0.03503714107063073],
+             InsetBox["x3", 
+             Offset[{2, 2}, {0.03503714107063073, 0.03503714107063073}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{3.696922959516494, 0.001870157421982932}, 
+             0.03503714107063073], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {3.731960100587125, 0.03690729849261366}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"4", " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"12", "+", 
+          RowBox[{"6", " ", "\[ScriptCapitalN]"}], "+", 
+          SuperscriptBox["\[ScriptCapitalN]", "2"]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"4", " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`y, $CellContext`z, \
+$CellContext`x1, $CellContext`x2, $CellContext`x3, $CellContext`x4}, {
+         Null, {{1, 2}, {1, 2}, {1, 3}, {1, 3}, {4, 2}, {5, 3}, {6, 3}, {7, 
+          2}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8486953264945052`, 
+             0.5945920176020124}, {2.4275311637177936`, 0.7851383350423783}, {
+             3.0064726087811064`, 0.5949131297406595}}], 
+             0.03503927170010389]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8486953264945052`, 
+             0.5945920176020124}, {2.427636771557799, 0.4043668123003841}, {
+             3.0064726087811064`, 0.5949131297406595}}], 
+             0.03503927170010389]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8486953264945052`, 
+             0.5945920176020124}, {1.2704387012713447`, 
+             0.40455114165417705`}, {0.6922634100580216, 
+             0.5948393225164789}}], 0.03503927170010389]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.8486953264945052`, 
+             0.5945920176020124}, {1.270520035281182, 0.7848801984644765}, {
+             0.6922634100580216, 0.5948393225164789}}], 0.03503927170010389]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{3.0064726087811064`, 0.5949131297406595}, {
+             3.696475219223144, 1.190548762507118}}, 0.03503927170010389]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{3.0064726087811064`, 0.5949131297406595}, {
+             3.6972453861168484`, 0.}}, 0.03503927170010389]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6922634100580216, 0.5948393225164789}, {
+             0.001539524364514211, 1.1886801286143927`}}, 
+             0.03503927170010389]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.6922634100580216, 0.5948393225164789}, {0., 
+             0.0021608822541706596`}}, 0.03503927170010389]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.8486953264945052, 0.5945920176020124}, 
+            0.03503927170010389], 
+           DiskBox[{3.0064726087811064, 0.5949131297406595}, 
+            0.03503927170010389], 
+           DiskBox[{0.6922634100580216, 0.5948393225164789}, 
+            0.03503927170010389], {
+            DiskBox[{3.696475219223144, 1.190548762507118}, 
+             0.03503927170010389], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {3.731514490923248, 1.2255880342072218}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.001539524364514211, 1.1886801286143927}, 
+             0.03503927170010389], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {0.0365787960646181, 1.2237194003144964}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 0.0021608822541706596}, 0.03503927170010389], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.03503927170010389, 0.03720015395427455}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{3.6972453861168484, 0.}, 0.03503927170010389], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {3.7322846578169524, 0.03503927170010389}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"12", "+", 
+          RowBox[{"6", " ", "\[ScriptCapitalN]"}], "+", 
+          SuperscriptBox["\[ScriptCapitalN]", "2"]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"4", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "k"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"j", ",", "l"}]},
+            "KroneckerDeltaSeq"]}], "+", 
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "j"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"k", ",", "l"}]},
+            "KroneckerDeltaSeq"]}]}], ")"}]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x4, $CellContext`y, \
+$CellContext`z, $CellContext`x1, $CellContext`x2, $CellContext`x3}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 4}, {6, 3}, {7, 3}, {3, 
+          4}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7461057709010865`, 1.675641717942003}, {
+             2.3752906863932344`, 2.4523627227365115`}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7461057709010865`, 1.675641717942003}, {
+             0.8086182753241545, 1.2279312894370222`}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7461057709010865`, 
+             1.675641717942003}, {1.8928770127778758`, 1.226791844649663}, {
+             1.7445767987740808`, 0.7784448219926101}}], 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7461057709010865`, 
+             1.675641717942003}, {1.5978055568972922`, 1.227294695286329}, {
+             1.7445767987740808`, 0.7784448219926101}}], 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {
+             1.7445767987740808`, 0.7784448219926101}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {0., 
+             1.8327727324671785`}}, 0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {
+             0.00018637011940203507`, 0.6231948727382306}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7445767987740808`, 0.7784448219926101}, {
+             2.3719052888531724`, 0.}}, 0.026179105538241487`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.7461057709010865, 1.675641717942003}, 
+            0.026179105538241487], {
+            DiskBox[{2.3752906863932344, 2.4523627227365115}, 
+             0.026179105538241487], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {2.401469791931476, 2.478541828274753}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{0.8086182753241545, 1.2279312894370222}, 
+            0.026179105538241487], 
+           DiskBox[{1.7445767987740808, 0.7784448219926101}, 
+            0.026179105538241487], {
+            DiskBox[{2.3719052888531724, 0.}, 0.026179105538241487], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {2.398084394391414, 0.026179105538241487}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 1.8327727324671785}, 0.026179105538241487], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {0.026179105538241487, 1.85895183800542}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.00018637011940203507, 0.6231948727382306}, 
+             0.026179105538241487], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.026365475657643522, 0.649373978276472}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"10", "+", 
+          RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "k"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"j", ",", "l"}]},
+            "KroneckerDeltaSeq"]}], "+", 
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "j"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"k", ",", "l"}]},
+            "KroneckerDeltaSeq"]}]}], ")"}]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x4, $CellContext`y, \
+$CellContext`z, $CellContext`x1, $CellContext`x2, $CellContext`x3}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 3}, {6, 4}, {7, 3}, {3, 
+          4}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7434366414201994`, 0.7798695094332062}, {
+             2.368609307563851, 0.}}, 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7434366414201994`, 0.7798695094332062}, {
+             0.8088269066972877, 1.2307927711524433`}}, 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7434366414201994`, 
+             0.7798695094332062}, {1.5973950495423659`, 
+             1.2295800463298006`}, {1.7467933343721513`, 1.678186629029557}}],
+              0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7434366414201994`, 
+             0.7798695094332062}, {1.8928349262499853`, 1.228476092132644}, {
+             1.7467933343721513`, 1.678186629029557}}], 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8088269066972877, 1.2307927711524433`}, {
+             1.7467933343721513`, 1.678186629029557}}, 
+             0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8088269066972877, 1.2307927711524433`}, {0., 
+             0.6280557334014667}}, 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8088269066972877, 1.2307927711524433`}, {
+             0.0010191772517804676`, 1.8363354373817122`}}, 
+             0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7467933343721513`, 1.678186629029557}, {
+             2.3769967509015815`, 2.454925869090519}}, 0.02619875100593111]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.7434366414201994, 0.7798695094332062}, 
+            0.02619875100593111], {
+            DiskBox[{2.368609307563851, 0.}, 0.02619875100593111], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {2.394808058569782, 0.02619875100593111}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{0.8088269066972877, 1.2307927711524433}, 
+            0.02619875100593111], 
+           DiskBox[{1.7467933343721513, 1.678186629029557}, 
+            0.02619875100593111], {
+            DiskBox[{0., 0.6280557334014667}, 0.02619875100593111], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {0.02619875100593111, 0.6542544844073979}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.3769967509015815, 2.454925869090519}, 
+             0.02619875100593111], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {2.4031955019075126, 2.48112462009645}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.0010191772517804676, 1.8363354373817122}, 
+             0.02619875100593111], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.027217928257711577, 1.8625341883876434}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"10", "+", 
+          RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x4, $CellContext`y, \
+$CellContext`z, $CellContext`x1, $CellContext`x2, $CellContext`x3}, {
+         Null, {{1, 2}, {1, 3}, {1, 3}, {1, 4}, {5, 4}, {6, 4}, {7, 3}, {3, 
+          4}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.246259627358657, 0.6772097421980489}, {
+             3.275543483231528, 0.5059802125060924}}, 0.03218344808956462]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{2.246259627358657, 
+             0.6772097421980489}, {1.6379977688733804`, 
+             0.47822629311765963`}, {1.0303666407231638`, 
+             0.6791275464705921}}], 0.03218344808956462]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{2.246259627358657, 
+             0.6772097421980489}, {1.6386284992084406`, 0.8781109955512181}, {
+             1.0303666407231638`, 0.6791275464705921}}], 
+             0.03218344808956462]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.246259627358657, 0.6772097421980489}, {
+             1.6398332960031752`, 1.081472944206832}}, 0.03218344808956462]}, 
+           
+           {Arrowheads[0.], 
+            ArrowBox[{{1.0303666407231638`, 0.6791275464705921}, {
+             1.6398332960031752`, 1.081472944206832}}, 
+             0.03218344808956462]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.0303666407231638`, 0.6791275464705921}, {0., 
+             0.5105759586412545}}, 0.03218344808956462]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.6398332960031752`, 1.081472944206832}, {
+             1.6391179974203423`, 0.}}, 0.03218344808956462]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.6398332960031752`, 1.081472944206832}, {
+             1.644743358623379, 2.134406609234036}}, 0.03218344808956462]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{2.246259627358657, 0.6772097421980489}, 
+            0.03218344808956462], {
+            DiskBox[{3.275543483231528, 0.5059802125060924}, 
+             0.03218344808956462], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {3.3077269313210924, 0.538163660595657}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{1.0303666407231638, 0.6791275464705921}, 
+            0.03218344808956462], 
+           DiskBox[{1.6398332960031752, 1.081472944206832}, 
+            0.03218344808956462], {
+            DiskBox[{1.6391179974203423, 0.}, 0.03218344808956462], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {1.671301445509907, 0.03218344808956462}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{1.644743358623379, 2.134406609234036}, 
+             0.03218344808956462], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {1.6769268067129437, 2.1665900573236003}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 0.5105759586412545}, 0.03218344808956462], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.03218344808956462, 0.5427594067308191}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"10", "+", 
+          RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x3, $CellContext`y, \
+$CellContext`z, $CellContext`x1, $CellContext`x2, $CellContext`x4}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 4}, {6, 3}, {7, 3}, {3, 
+          4}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7461057709010865`, 1.675641717942003}, {
+             2.3752906863932344`, 2.4523627227365115`}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7461057709010865`, 1.675641717942003}, {
+             0.8086182753241545, 1.2279312894370222`}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7461057709010865`, 
+             1.675641717942003}, {1.8928770127778758`, 1.226791844649663}, {
+             1.7445767987740808`, 0.7784448219926101}}], 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7461057709010865`, 
+             1.675641717942003}, {1.5978055568972922`, 1.227294695286329}, {
+             1.7445767987740808`, 0.7784448219926101}}], 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {
+             1.7445767987740808`, 0.7784448219926101}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {0., 
+             1.8327727324671785`}}, 0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {
+             0.00018637011940203507`, 0.6231948727382306}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7445767987740808`, 0.7784448219926101}, {
+             2.3719052888531724`, 0.}}, 0.026179105538241487`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.7461057709010865, 1.675641717942003}, 
+            0.026179105538241487], {
+            DiskBox[{2.3752906863932344, 2.4523627227365115}, 
+             0.026179105538241487], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {2.401469791931476, 2.478541828274753}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{0.8086182753241545, 1.2279312894370222}, 
+            0.026179105538241487], 
+           DiskBox[{1.7445767987740808, 0.7784448219926101}, 
+            0.026179105538241487], {
+            DiskBox[{2.3719052888531724, 0.}, 0.026179105538241487], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {2.398084394391414, 0.026179105538241487}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 1.8327727324671785}, 0.026179105538241487], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {0.026179105538241487, 1.85895183800542}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.00018637011940203507, 0.6231948727382306}, 
+             0.026179105538241487], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {0.026365475657643522, 0.649373978276472}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"10", "+", 
+          RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x3, $CellContext`y, \
+$CellContext`z, $CellContext`x1, $CellContext`x2, $CellContext`x4}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 3}, {6, 4}, {7, 3}, {3, 
+          4}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7434366414201994`, 0.7798695094332062}, {
+             2.368609307563851, 0.}}, 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7434366414201994`, 0.7798695094332062}, {
+             0.8088269066972877, 1.2307927711524433`}}, 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7434366414201994`, 
+             0.7798695094332062}, {1.5973950495423659`, 
+             1.2295800463298006`}, {1.7467933343721513`, 1.678186629029557}}],
+              0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7434366414201994`, 
+             0.7798695094332062}, {1.8928349262499853`, 1.228476092132644}, {
+             1.7467933343721513`, 1.678186629029557}}], 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8088269066972877, 1.2307927711524433`}, {
+             1.7467933343721513`, 1.678186629029557}}, 
+             0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8088269066972877, 1.2307927711524433`}, {0., 
+             0.6280557334014667}}, 0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8088269066972877, 1.2307927711524433`}, {
+             0.0010191772517804676`, 1.8363354373817122`}}, 
+             0.02619875100593111]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7467933343721513`, 1.678186629029557}, {
+             2.3769967509015815`, 2.454925869090519}}, 0.02619875100593111]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.7434366414201994, 0.7798695094332062}, 
+            0.02619875100593111], {
+            DiskBox[{2.368609307563851, 0.}, 0.02619875100593111], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {2.394808058569782, 0.02619875100593111}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{0.8088269066972877, 1.2307927711524433}, 
+            0.02619875100593111], 
+           DiskBox[{1.7467933343721513, 1.678186629029557}, 
+            0.02619875100593111], {
+            DiskBox[{0., 0.6280557334014667}, 0.02619875100593111], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {0.02619875100593111, 0.6542544844073979}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.3769967509015815, 2.454925869090519}, 
+             0.02619875100593111], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {2.4031955019075126, 2.48112462009645}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.0010191772517804676, 1.8363354373817122}, 
+             0.02619875100593111], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {0.027217928257711577, 1.8625341883876434}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"10", "+", 
+          RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "k"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"j", ",", "l"}]},
+            "KroneckerDeltaSeq"]}], "+", 
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "j"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"k", ",", "l"}]},
+            "KroneckerDeltaSeq"]}]}], ")"}]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`x2, $CellContext`y, \
+$CellContext`z, $CellContext`x1, $CellContext`x3, $CellContext`x4}, {
+         Null, {{1, 2}, {1, 3}, {1, 4}, {1, 4}, {5, 4}, {6, 3}, {7, 3}, {3, 
+          4}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7461057709010865`, 1.675641717942003}, {
+             2.3752906863932344`, 2.4523627227365115`}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7461057709010865`, 1.675641717942003}, {
+             0.8086182753241545, 1.2279312894370222`}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7461057709010865`, 
+             1.675641717942003}, {1.8928770127778758`, 1.226791844649663}, {
+             1.7445767987740808`, 0.7784448219926101}}], 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.7461057709010865`, 
+             1.675641717942003}, {1.5978055568972922`, 1.227294695286329}, {
+             1.7445767987740808`, 0.7784448219926101}}], 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {
+             1.7445767987740808`, 0.7784448219926101}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {0., 
+             1.8327727324671785`}}, 0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.8086182753241545, 1.2279312894370222`}, {
+             0.00018637011940203507`, 0.6231948727382306}}, 
+             0.026179105538241487`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.7445767987740808`, 0.7784448219926101}, {
+             2.3719052888531724`, 0.}}, 0.026179105538241487`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.7461057709010865, 1.675641717942003}, 
+            0.026179105538241487], {
+            DiskBox[{2.3752906863932344, 2.4523627227365115}, 
+             0.026179105538241487], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {2.401469791931476, 2.478541828274753}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, 
+           DiskBox[{0.8086182753241545, 1.2279312894370222}, 
+            0.026179105538241487], 
+           DiskBox[{1.7445767987740808, 0.7784448219926101}, 
+            0.026179105538241487], {
+            DiskBox[{2.3719052888531724, 0.}, 0.026179105538241487], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {2.398084394391414, 0.026179105538241487}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 1.8327727324671785}, 0.026179105538241487], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.026179105538241487, 1.85895183800542}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.00018637011940203507, 0.6231948727382306}, 
+             0.026179105538241487], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {0.026365475657643522, 0.649373978276472}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"10", "+", 
+          RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`y, $CellContext`z, \
+$CellContext`x1, $CellContext`x2, $CellContext`x3, $CellContext`x4}, {
+         Null, {{1, 1}, {1, 2}, {1, 3}, {4, 3}, {5, 3}, {6, 2}, {7, 2}, {2, 
+          3}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.5235914317129104`, 
+             1.2385284288483642`}, {1.3328943462487983`, 
+             1.3271938475471787`}, {1.2766922367160651`, 1.526127273284069}, {
+             1.33577340636985, 1.6532402948799336`}, {1.7122186192141877`, 
+             1.6528728829038164`}, {1.7710515509486486`, 1.52564477669132}, {
+             1.7144612292822858`, 1.3268214368012512`}, {1.5235914317129104`, 
+             1.2385284288483642`}},
+             SplineDegree->7], 0.030559595874547513`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.5235914317129104`, 1.2385284288483642`}, {
+             2.1428329630321388`, 0.7363052174817156}}, 
+             0.030559595874547513`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.5235914317129104`, 1.2385284288483642`}, {
+             0.9019208016818302, 0.7363436810551549}}, 
+             0.030559595874547513`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.1428329630321388`, 0.7363052174817156}, {
+             0.9019208016818302, 0.7363436810551549}}, 
+             0.030559595874547513`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.1428329630321388`, 0.7363052174817156}, {
+             3.0447524532764394`, 1.231729050960192}}, 
+             0.030559595874547513`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.1428329630321388`, 0.7363052174817156}, {
+             2.8450024695734726`, 0.0011719744005246335`}}, 
+             0.030559595874547513`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.9019208016818302, 0.7363436810551549}, {0., 
+             1.2325927322410823`}}, 0.030559595874547513`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.9019208016818302, 0.7363436810551549}, {
+             0.20085577443522884`, 0.}}, 0.030559595874547513`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.5235914317129104, 1.2385284288483642}, 
+            0.030559595874547513], 
+           DiskBox[{2.1428329630321388, 0.7363052174817156}, 
+            0.030559595874547513], 
+           DiskBox[{0.9019208016818302, 0.7363436810551549}, 
+            0.030559595874547513], {
+            DiskBox[{0., 1.2325927322410823}, 0.030559595874547513], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {0.030559595874547513, 1.2631523281156298}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.20085577443522884, 0.}, 0.030559595874547513], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {0.23141537030977635, 0.030559595874547513}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{3.0447524532764394, 1.231729050960192}, 
+             0.030559595874547513], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {3.075312049150987, 1.2622886468347394}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.8450024695734726, 0.0011719744005246335}, 
+             0.030559595874547513], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {2.8755620654480203, 0.031731570275072146}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     RowBox[{"(", 
+      RowBox[{"2", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`y, $CellContext`z, \
+$CellContext`x1, $CellContext`x2, $CellContext`x3, $CellContext`x4}, {
+         Null, {{1, 1}, {1, 2}, {1, 3}, {4, 3}, {5, 2}, {6, 3}, {7, 2}, {2, 
+          3}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.5234843229006116`, 
+             1.238595657342672}, {1.332742608361168, 1.3271650268340278`}, {
+             1.276440320045535, 1.5260701231029958`}, {1.3354574661488032`, 
+             1.6532128827580999`}, {1.7119028162888315`, 
+             1.6530350543845869`}, {1.770799814578999, 1.5258365934689844`}, {
+             1.7143096305583023`, 1.3269847790426335`}, {1.5234843229006116`, 
+             1.238595657342672}},
+             SplineDegree->7], 0.03056113193265679]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.5234843229006116`, 1.238595657342672}, {
+             2.143425900157638, 0.7360363678245633}}, 0.03056113193265679]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.5234843229006116`, 1.238595657342672}, {
+             0.9024038507019907, 0.7360847658386676}}, 
+             0.03056113193265679]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.143425900157638, 0.7360363678245633}, {
+             0.9024038507019907, 0.7360847658386676}}, 
+             0.03056113193265679]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.143425900157638, 0.7360363678245633}, {
+             3.0449678012047183`, 1.231669463867563}}, 
+             0.03056113193265679]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.143425900157638, 0.7360363678245633}, {
+             2.844436494061305, 0.000339789161421411}}, 0.03056113193265679]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.9024038507019907, 0.7360847658386676}, {0., 
+             1.2319202203258348`}}, 0.03056113193265679]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.9024038507019907, 0.7360847658386676}, {
+             0.20125396754117286`, 0.}}, 0.03056113193265679]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.5234843229006116, 1.238595657342672}, 
+            0.03056113193265679], 
+           DiskBox[{2.143425900157638, 0.7360363678245633}, 
+            0.03056113193265679], 
+           DiskBox[{0.9024038507019907, 0.7360847658386676}, 
+            0.03056113193265679], {
+            DiskBox[{0., 1.2319202203258348}, 0.03056113193265679], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {0.03056113193265679, 1.2624813522584917}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{3.0449678012047183, 1.231669463867563}, 
+             0.03056113193265679], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {3.075528933137375, 1.2622305958002198}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.20125396754117286, 0.}, 0.03056113193265679], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.23181509947382967, 0.03056113193265679}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.844436494061305, 0.000339789161421411}, 
+             0.03056113193265679], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {2.874997625993962, 0.0309009210940782}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     RowBox[{"(", 
+      RowBox[{"2", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "k"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "l"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"2", " ", 
+        TemplateBox[{RowBox[{"i", ",", "j"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"k", ",", "l"}]},
+         "KroneckerDeltaSeq"]}]}], ")"}]}]}], ",", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["NetworkGraphics",
+      DynamicModuleBox[{Typeset`graph = HoldComplete[
+        Graph[{$CellContext`w, $CellContext`y, $CellContext`z, \
+$CellContext`x1, $CellContext`x2, $CellContext`x3, $CellContext`x4}, {
+         Null, {{1, 1}, {1, 2}, {1, 3}, {4, 2}, {5, 3}, {6, 3}, {7, 2}, {2, 
+          3}}}, {GraphLayout -> {"Dimension" -> 2}, 
+          VertexLabels -> {$CellContext`x3 -> Automatic, $CellContext`x1 -> 
+            Automatic, $CellContext`x4 -> Automatic, $CellContext`x2 -> 
+            Automatic}}]]}, 
+       TagBox[GraphicsGroupBox[{
+          {Hue[0.6, 0.7, 0.5], Opacity[0.7], 
+           {Arrowheads[0.], 
+            ArrowBox[BezierCurveBox[{{1.521018066792386, 1.239883609563921}, {
+             1.3301619641501423`, 1.3282062168723345`}, {1.2736024770309464`, 
+             1.5270383304964554`}, {1.3324551388122858`, 
+             1.6542573112665317`}, {1.7089004041090314`, 1.654566343464896}, {
+             1.7679618601456286`, 1.5274441609877105`}, {1.7117289003496712`, 
+             1.3285194535629965`}, {1.521018066792386, 1.239883609563921}},
+             SplineDegree->7], 0.030555951928715186`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.521018066792386, 1.239883609563921}, {
+             2.1420425546015363`, 0.7366971641119978}}, 
+             0.030555951928715186`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{1.521018066792386, 1.239883609563921}, {
+             0.9020465810273461, 0.7366749353837729}}, 
+             0.030555951928715186`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.1420425546015363`, 0.7366971641119978}, {
+             0.9020465810273461, 0.7366749353837729}}, 
+             0.030555951928715186`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.1420425546015363`, 0.7366971641119978}, {
+             3.0442416118247264`, 1.233106841364119}}, 
+             0.030555951928715186`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{2.1420425546015363`, 0.7366971641119978}, {
+             2.843224479775924, 0.}}, 0.030555951928715186`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.9020465810273461, 0.7366749353837729}, {0., 
+             1.2319567077546494`}}, 0.030555951928715186`]}, 
+           {Arrowheads[0.], 
+            ArrowBox[{{0.9020465810273461, 0.7366749353837729}, {
+             0.19987926826412306`, 0.0015546813469103915`}}, 
+             0.030555951928715186`]}}, 
+          {Hue[0.6, 0.2, 0.8], EdgeForm[{GrayLevel[0], Opacity[0.7]}], 
+           DiskBox[{1.521018066792386, 1.239883609563921}, 
+            0.030555951928715186], 
+           DiskBox[{2.1420425546015363, 0.7366971641119978}, 
+            0.030555951928715186], 
+           DiskBox[{0.9020465810273461, 0.7366749353837729}, 
+            0.030555951928715186], {
+            DiskBox[{3.0442416118247264, 1.233106841364119}, 
+             0.030555951928715186], 
+            InsetBox["x1", 
+             Offset[{2, 2}, {3.0747975637534415, 1.2636627932928342}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0., 1.2319567077546494}, 0.030555951928715186], 
+            InsetBox["x2", 
+             Offset[{2, 2}, {0.030555951928715186, 1.2625126596833645}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{0.19987926826412306, 0.0015546813469103915}, 
+             0.030555951928715186], 
+            InsetBox["x3", 
+             Offset[{2, 2}, {0.23043522019283824, 0.03211063327562558}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}, {
+            DiskBox[{2.843224479775924, 0.}, 0.030555951928715186], 
+            InsetBox["x4", 
+             Offset[{2, 2}, {2.873780431704639, 0.030555951928715186}], 
+             ImageScaled[{0, 0}],
+             BaseStyle->"Graphics"]}}}],
+        MouseAppearanceTag["NetworkGraphics"]],
+       AllowKernelInitialization->False]],
+     DefaultBaseStyle->{
+      "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+     FormatType->TraditionalForm,
+     FrameTicks->None], "\[Rule]", 
+    RowBox[{
+     FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+     RowBox[{"(", 
+      RowBox[{"2", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+     SuperscriptBox["\[Lambda]", "3"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+        TemplateBox[{RowBox[{"i", ",", "l"}]},
+         "KroneckerDeltaSeq"], " ", 
+        TemplateBox[{RowBox[{"j", ",", "k"}]},
+         "KroneckerDeltaSeq"]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "k"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"j", ",", "l"}]},
+            "KroneckerDeltaSeq"]}], "+", 
+          RowBox[{
+           TemplateBox[{RowBox[{"i", ",", "j"}]},
+            "KroneckerDeltaSeq"], " ", 
+           TemplateBox[{RowBox[{"k", ",", "l"}]},
+            "KroneckerDeltaSeq"]}]}], ")"}]}]}], ")"}]}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.750946821965208*^9, 3.750948069845983*^9, 
+  3.7509484352015657`*^9, 3.750948687299128*^9, 3.750950365286953*^9, 
+  3.750950471591275*^9},
+ CellLabel->"Out[32]=",ExpressionUUID->"71adcfcc-0964-4964-82dc-e1db343e8480"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"GraphTo\[CapitalDelta]", "@", 
+   RowBox[{
+    RowBox[{"KeyValueMap", "[", "List", "]"}], "@", 
+    "FourPointConnected3rd"}]}], "//", 
+  RowBox[{
+   RowBox[{"Collect", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Expand", "@", "#"}], "/.", 
+      RowBox[{"\[Delta]", "\[Rule]", "KroneckerDelta"}]}], ",", 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"\[CapitalDelta]", "[", 
+        RowBox[{"w", ",", "z"}], "]"}], "p_."], 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"\[CapitalDelta]", "[", "__", "]"}], ".."}], ")"}]}], ",", 
+     RowBox[{"Highlighted", "@*", "Simplify"}]}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.750947962671637*^9, 3.750948043865506*^9}, {
+  3.750948362217589*^9, 3.750948376578392*^9}},
+ CellLabel->"In[33]:=",ExpressionUUID->"ae9e789b-c19a-4ca3-accd-e39eb991f0f4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"4", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"4", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"12", "+", 
+                 RowBox[{"6", " ", "\[ScriptCapitalN]"}], "+", 
+                 SuperscriptBox["\[ScriptCapitalN]", "2"]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}], " ", 
+       SuperscriptBox[
+        RowBox[{"\[CapitalDelta]", "[", 
+          RowBox[{"w", ",", "y"}], "]"}], "2"]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"4", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"12", "+", 
+                 RowBox[{"6", " ", "\[ScriptCapitalN]"}], "+", 
+                 SuperscriptBox["\[ScriptCapitalN]", "2"]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"4", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}], " ", 
+       SuperscriptBox[
+        RowBox[{"\[CapitalDelta]", "[", 
+          RowBox[{"w", ",", "y"}], "]"}], "2"]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "4"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"12", "+", 
+                 RowBox[{"6", " ", "\[ScriptCapitalN]"}], "+", 
+                 SuperscriptBox["\[ScriptCapitalN]", "2"]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"4", " ", 
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], 
+               ")"}]}]}], ")"}], " ", 
+       SuperscriptBox[
+        RowBox[{"\[CapitalDelta]", "[", 
+          RowBox[{"w", ",", "y"}], "]"}], "2"]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"10", "+", 
+                 RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], 
+               ")"}]}]}], ")"}]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"10", "+", 
+                 RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"10", "+", 
+                 RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}], " ", 
+       SuperscriptBox[
+        RowBox[{"\[CapitalDelta]", "[", 
+          RowBox[{"w", ",", "y"}], "]"}], "2"]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"10", "+", 
+                 RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x3"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"10", "+", 
+                 RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], 
+               ")"}]}]}], ")"}]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x3"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"6", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"10", "+", 
+                 RowBox[{"3", " ", "\[ScriptCapitalN]"}]}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x2"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       RowBox[{"(", 
+         RowBox[{"2", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "w"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       RowBox[{"(", 
+         RowBox[{"2", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "w"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       FractionBox["1", "2"], " ", "\[ImaginaryI]", " ", 
+       RowBox[{"(", 
+         RowBox[{"2", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+       SuperscriptBox["\[Lambda]", "3"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             RowBox[{"(", 
+               RowBox[{
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+                 RowBox[{
+                   TemplateBox[{
+                    RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+                   TemplateBox[{
+                    RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], 
+               ")"}]}]}], ")"}]}],FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "w"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "y"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"y", ",", "z"}], "]"}]}]}]], "Output",
+ CellChangeTimes->{3.750948440132764*^9, 3.750948687584135*^9, 
+  3.750950476651252*^9},
+ CellLabel->"Out[33]=",ExpressionUUID->"eb6f31bb-e3f1-4ad0-b095-d8252eaf4d05"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[ScriptCapitalO]", "(", 
+    SuperscriptBox["\[Lambda]", "2"], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "9670f671-3963-4d9d-ab18-d0c5e9e59248"],
+ " using Feynman rules"
+}], "Section",
+ CellChangeTimes->{{3.75087392965342*^9, 3.750873978956341*^9}, {
+  3.7508740467733507`*^9, 3.750874066906808*^9}, {3.7508808107524853`*^9, 
+  3.7508808142871017`*^9}},ExpressionUUID->"526a3a28-015d-4fc3-83af-\
+d2394ec36bf6"],
+
+Cell[BoxData[{
+ RowBox[{"Clear", "[", 
+  RowBox[{"Propagator", ",", "Vertex\[Lambda]"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Propagator", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"i_", ",", "x_"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j_", ",", "y_"}], "}"}]}], "]"}], "=", 
+   RowBox[{
+    RowBox[{"\[Delta]", "[", 
+     RowBox[{"i", ",", "j"}], "]"}], 
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"x", ",", "y"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Vertex\[Lambda]", "[", 
+    RowBox[{"{", 
+     RowBox[{"i_", ",", "j_", ",", "l_", ",", "k_"}], "}"}], "]"}], "=", 
+   RowBox[{
+    RowBox[{"-", "\[ImaginaryI]"}], " ", "\[Lambda]", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"\[Delta]", "[", 
+        RowBox[{"i", ",", "l"}], "]"}], " ", 
+       RowBox[{"\[Delta]", "[", 
+        RowBox[{"j", ",", "k"}], "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"\[Delta]", "[", 
+        RowBox[{"i", ",", "k"}], "]"}], " ", 
+       RowBox[{"\[Delta]", "[", 
+        RowBox[{"j", ",", "l"}], "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"\[Delta]", "[", 
+        RowBox[{"i", ",", "j"}], "]"}], " ", 
+       RowBox[{"\[Delta]", "[", 
+        RowBox[{"k", ",", "l"}], "]"}]}]}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"AllChannels", "[", 
+    RowBox[{"{", 
+     RowBox[{"x1_", ",", "x2_", ",", "x3_", ",", "x4_"}], "}"}], "]"}], "=", 
+   RowBox[{
+    RowBox[{"Total", "[", 
+     RowBox[{"#", "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Thread", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"x1", ",", "x2", ",", "x3", ",", "x4"}], "}"}], "\[Rule]", 
+          
+          RowBox[{"{", 
+           RowBox[{"x1", ",", "x2", ",", "x3", ",", "x4"}], "}"}]}], "]"}], 
+        ",", 
+        RowBox[{"Thread", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"x1", ",", "x2", ",", "x3", ",", "x4"}], "}"}], "\[Rule]", 
+          
+          RowBox[{"{", 
+           RowBox[{"x1", ",", "x3", ",", "x4", ",", "x2"}], "}"}]}], "]"}], 
+        ",", 
+        RowBox[{"Thread", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"x1", ",", "x2", ",", "x3", ",", "x4"}], "}"}], "\[Rule]", 
+          
+          RowBox[{"{", 
+           RowBox[{"x1", ",", "x4", ",", "x2", ",", "x3"}], "}"}]}], "]"}]}], 
+       "}"}]}], "]"}], "&"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.750874004752983*^9, 3.750874014357574*^9}, 
+   3.7508740729682093`*^9, {3.750874241048658*^9, 3.750874298162361*^9}, {
+   3.750877161965233*^9, 3.750877228672941*^9}, {3.750880123087441*^9, 
+   3.750880125399864*^9}, {3.750881017257042*^9, 3.750881025718047*^9}, {
+   3.750881066376952*^9, 3.750881108846754*^9}, {3.750881322430079*^9, 
+   3.750881387925009*^9}, {3.75094840738666*^9, 3.750948421150448*^9}},
+ CellLabel->"In[34]:=",ExpressionUUID->"c5b6a1f9-6b0f-4571-9935-5f0f88c7861b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     FractionBox["1", "2"], 
+     RowBox[{"Propagator", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"i", ",", "x1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i0", ",", "z"}], "}"}]}], "]"}], 
+     RowBox[{"Propagator", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"j", ",", "x2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"j0", ",", "z"}], "}"}]}], "]"}], 
+     RowBox[{"Vertex\[Lambda]", "[", 
+      RowBox[{"{", 
+       RowBox[{"i0", ",", "j0", ",", "p1", ",", "q1"}], "}"}], "]"}], 
+     RowBox[{"Propagator", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"p1", ",", "z"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"p2", ",", "w"}], "}"}]}], "]"}], 
+     RowBox[{"Propagator", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"q1", ",", "z"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"q2", ",", "w"}], "}"}]}], "]"}], 
+     RowBox[{"Vertex\[Lambda]", "[", 
+      RowBox[{"{", 
+       RowBox[{"p2", ",", "q2", ",", "k0", ",", "l0"}], "}"}], "]"}], 
+     RowBox[{"Propagator", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"k0", ",", "w"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"k", ",", "x3"}], "}"}]}], "]"}], 
+     RowBox[{"Propagator", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"l0", ",", "w"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"l", ",", "x4"}], "}"}]}], "]"}]}], "//", 
+    RowBox[{"AllChannels", "[", 
+     RowBox[{"{", 
+      RowBox[{"x1", ",", "x2", ",", "x3", ",", "x4"}], "}"}], "]"}]}], "//", 
+   RowBox[{"SumRule", "[", 
+    RowBox[{
+    "i0", "|", "j0", "|", "k0", "|", "l0", "|", "p1", "|", "p2", "|", "q1", 
+     "|", "q2"}], "]"}]}], "//", 
+  RowBox[{
+   RowBox[{"Collect", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Expand", "@", "#"}], "/.", 
+      RowBox[{"\[Delta]", "\[Rule]", "KroneckerDelta"}]}], ",", 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"\[CapitalDelta]", "[", 
+        RowBox[{"w", ",", "z"}], "]"}], "p_."], 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"\[CapitalDelta]", "[", "__", "]"}], ".."}], ")"}]}], ",", 
+     RowBox[{"Highlighted", "@*", "Simplify"}]}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.750880139407125*^9, 3.750880227082734*^9}, {
+  3.750880826992985*^9, 3.750880840874064*^9}, {3.750880874145997*^9, 
+  3.750881013861184*^9}, {3.750881394109173*^9, 3.750881434401849*^9}, {
+  3.750881477994976*^9, 3.7508814883971863`*^9}, {3.750881518977241*^9, 
+  3.7508815333638144`*^9}, {3.7509453163588247`*^9, 3.750945344182597*^9}, {
+  3.7509479989365063`*^9, 3.75094800624331*^9}, {3.750948428118731*^9, 
+  3.750948461851803*^9}},
+ CellLabel->"In[38]:=",ExpressionUUID->"e868fc9d-5e7e-429e-808a-77eabe44e68b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   TemplateBox[{RowBox[{
+       RowBox[{"-", 
+         FractionBox["1", "2"]}], " ", 
+       SuperscriptBox["\[Lambda]", "2"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x3"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x2", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       RowBox[{"-", 
+         FractionBox["1", "2"]}], " ", 
+       SuperscriptBox["\[Lambda]", "2"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x2"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x4"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x3", ",", "z"}], "]"}]}], "+", 
+  RowBox[{
+   TemplateBox[{RowBox[{
+       RowBox[{"-", 
+         FractionBox["1", "2"]}], " ", 
+       SuperscriptBox["\[Lambda]", "2"], " ", 
+       RowBox[{"(", 
+         RowBox[{
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "l"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "k"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{"2", " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "k"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"j", ",", "l"}]}, "KroneckerDeltaSeq"]}], "+", 
+           RowBox[{
+             RowBox[{"(", 
+               RowBox[{"4", "+", "\[ScriptCapitalN]"}], ")"}], " ", 
+             TemplateBox[{
+               RowBox[{"i", ",", "j"}]}, "KroneckerDeltaSeq"], " ", 
+             TemplateBox[{
+               RowBox[{"k", ",", "l"}]}, "KroneckerDeltaSeq"]}]}], ")"}]}],
+     FrameStyle -> None},
+    "Highlighted"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x2"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"w", ",", "x3"}], "]"}], " ", 
+   SuperscriptBox[
+    RowBox[{"\[CapitalDelta]", "[", 
+     RowBox[{"w", ",", "z"}], "]"}], "2"], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x1", ",", "z"}], "]"}], " ", 
+   RowBox[{"\[CapitalDelta]", "[", 
+    RowBox[{"x4", ",", "z"}], "]"}]}]}]], "Output",
+ CellChangeTimes->{
+  3.750880819985874*^9, 3.750880944961699*^9, {3.750880981061075*^9, 
+   3.750880995706993*^9}, 3.750881409199665*^9, {3.7508814840437717`*^9, 
+   3.7508814886493053`*^9}, {3.7508815200222588`*^9, 3.750881533896474*^9}, 
+   3.750943476893425*^9, {3.750945316840837*^9, 3.7509453445426617`*^9}, 
+   3.750948006609374*^9, 3.750948469922166*^9, 3.7509486876934*^9, 
+   3.750950480284789*^9},
+ CellLabel->"Out[38]=",ExpressionUUID->"d6a4a09d-08e4-48bb-b543-ee3e47c4fbb1"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{960, 1012},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+FrontEndVersion->"11.3 for Linux x86 (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 171, 3, 104, "Title",ExpressionUUID->"b5e80127-dcf3-44fa-a1bb-276bc9a80802"],
+Cell[CellGroupData[{
+Cell[776, 29, 164, 3, 71, "Section",ExpressionUUID->"4be3ae8a-5165-468e-af14-133d5f02aaef"],
+Cell[943, 34, 410, 8, 57, "Input",ExpressionUUID->"e94da211-0028-4042-836d-503d90581366"],
+Cell[1356, 44, 2525, 61, 168, "Input",ExpressionUUID->"82fd5efe-4191-44a2-a48b-3fc6803edc0d"],
+Cell[3884, 107, 10477, 250, 713, "Input",ExpressionUUID->"e6a26e16-f57b-48cb-a41c-9d917bd9437c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14398, 362, 495, 12, 75, "Section",ExpressionUUID->"1e85e0a8-3dbc-4378-9b29-4b824be892bc"],
+Cell[CellGroupData[{
+Cell[14918, 378, 2718, 57, 134, "Input",ExpressionUUID->"a3ec842b-d491-404f-8a11-34ec60c9f489"],
+Cell[17639, 437, 4477, 93, 87, "Output",ExpressionUUID->"773ec4f6-0617-4cf4-8621-1a18a9135ee6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22153, 535, 674, 17, 57, "Input",ExpressionUUID->"0c07a8c2-ee0f-44ef-b9b7-e1228f31d979"],
+Cell[22830, 554, 1388, 34, 52, "Output",ExpressionUUID->"20de2dbb-f505-4513-b020-6477ab6f29f6"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24267, 594, 440, 12, 75, "Section",ExpressionUUID->"adab82ac-3820-4d5a-a78b-55dc465c060c"],
+Cell[CellGroupData[{
+Cell[24732, 610, 3590, 76, 161, "Input",ExpressionUUID->"7767b495-b135-469e-beef-f296221c7169"],
+Cell[28325, 688, 13595, 295, 395, "Output",ExpressionUUID->"2fde0083-8a44-429b-97dc-5f3950748f08"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41957, 988, 832, 22, 61, "Input",ExpressionUUID->"87ec2f14-4a58-44bc-80f4-c00f97dec021"],
+Cell[42792, 1012, 4674, 119, 182, "Output",ExpressionUUID->"0890a022-a2e2-4efc-a459-908063349439"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47515, 1137, 393, 11, 75, "Section",ExpressionUUID->"2149cb01-086d-46e3-8f38-41367ba7a7c1"],
+Cell[CellGroupData[{
+Cell[47933, 1152, 3061, 72, 185, "Input",ExpressionUUID->"86bfe141-3350-4779-b6e9-86e5972cfdd5"],
+Cell[50997, 1226, 59955, 1282, 1995, "Output",ExpressionUUID->"71adcfcc-0964-4964-82dc-e1db343e8480"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[110989, 2513, 851, 22, 61, "Input",ExpressionUUID->"ae9e789b-c19a-4ca3-accd-e39eb991f0f4"],
+Cell[111843, 2537, 21330, 531, 886, "Output",ExpressionUUID->"eb6f31bb-e3f1-4ad0-b095-d8252eaf4d05"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[133222, 3074, 500, 12, 75, "Section",ExpressionUUID->"526a3a28-015d-4fc3-83af-d2394ec36bf6"],
+Cell[133725, 3088, 2968, 82, 153, "Input",ExpressionUUID->"c5b6a1f9-6b0f-4571-9935-5f0f88c7861b"],
+Cell[CellGroupData[{
+Cell[136718, 3174, 2789, 76, 161, "Input",ExpressionUUID->"e868fc9d-5e7e-429e-808a-77eabe44e68b"],
+Cell[139510, 3252, 4781, 120, 182, "Output",ExpressionUUID->"d6a4a09d-08e4-48bb-b543-ee3e47c4fbb1"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
